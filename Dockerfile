@@ -42,3 +42,6 @@ RUN cd /root/honey-badger-testing && . "$HOME/.cargo/env" && npm run build-open-
 RUN cd /root/honey-badger-testing && . "$HOME/.cargo/env" && npm run testnet-fresh
 # honey badger testing
 
+WORKDIR /root/honey-badger-testing
+
+CMD npm run testnet-start-current
