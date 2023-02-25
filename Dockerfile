@@ -35,11 +35,13 @@ RUN cd /root && git clone https://github.com/$NODE_REPO/diamond-node.git && cd d
 
 # honey badger testing
 RUN cd /root && git clone https://github.com/$TESTING_REPO/honey-badger-testing.git && cd honey-badger-testing && git checkout $TESTING_COMMIT_HASH
-RUN cd /root/hbbft-posdao-contracts && mkdir -p build/contracts && find artifacts/contracts -name "*.json" -exec cp '{}' /root/hbbft-posdao-contracts/build/contracts/ ';'
+WORKDIR /root/hbbft-posdao-contracts
+RUN mkdir -p build/contracts && find artifacts/contracts -name "*.json" -exec cp '{}' /root/hbbft-posdao-contracts/build/contracts/ ';'
 RUN rm /root/hbbft-posdao-contracts/build/contracts/*.dbg.json
-RUN cd /root/honey-badger-testing && . "$HOME/.cargo/env" && npm ci
-RUN cd /root/honey-badger-testing && . "$HOME/.cargo/env" && npm run build-open-ethereum
-RUN cd /root/honey-badger-testing && . "$HOME/.cargo/env" && npm run testnet-fresh
+WORKDIR /root/honey-badger-testing
+RUN . "$HOME/.cargo/env" && npm ci
+RUN . "$HOME/.cargo/env" && npm run build-open-ethereum
+RUN . "$HOME/.cargo/env" && npm run testnet-fresh
 # honey badger testing
 
 WORKDIR /root/honey-badger-testing
