@@ -5,7 +5,7 @@ FROM node:16.19.1-buster
 
 ARG CONTRACTS_REPO=surfingnerd
 ARG CONTRACTS_COMMIT_HASH=7d53424907c116ba59a47c3270a431e0b53386d2
-ARG NOTE_REPO_REPO=surfingnerd
+ARG NODE_REPO=surfingnerd
 ARG NODE_COMMIT_HASH=f0738f877253007bfa20614f6f9f6dfac2a9e4a4
 ARG TESTING_REPO=surfingnerd
 ARG TESTING_COMMIT_HASH=c28bab0f69997a3d018b09534dfaafd60d0ad22f
@@ -29,7 +29,7 @@ RUN cd /root && git clone https://github.com/$CONTRACTS_REPO/hbbft-posdao-contra
 RUN cd /root/hbbft-posdao-contracts && npm ci && npm run compile && mkdir -p build/contracts && find artifacts/**/*.sol/*json -type f -exec cp '{}' build/contracts ';' && cd ..
 
 # diamond node
-RUN cd /root && git clone https://github.com/$NOTE_REPO_REPO/diamond-node.git && cd diamond-node && git checkout $NODE_COMMIT_HASH
+RUN cd /root && git clone https://github.com/$NODE_REPO/diamond-node.git && cd diamond-node && git checkout $NODE_COMMIT_HASH
 RUN cd /root/diamond-node && . "$HOME/.cargo/env" &&  rustup default 1.64 && RUSTFLAGS='-C target-cpu=native' && cargo build --profile perf && cd ..
 
 # honey badger testing
