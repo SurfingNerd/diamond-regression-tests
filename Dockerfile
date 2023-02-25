@@ -30,7 +30,8 @@ RUN cd /root/hbbft-posdao-contracts && npm ci && npm run compile && mkdir -p bui
 
 # diamond node
 RUN cd /root && git clone https://github.com/$NODE_REPO/diamond-node.git && cd diamond-node && git checkout $NODE_COMMIT_HASH
-RUN cd /root/diamond-node && . "$HOME/.cargo/env" &&  rustup default 1.64 && RUSTFLAGS='-C target-cpu=native' && cargo build --profile perf && cd ..
+# we don't need to build the node, becaus it is build by the testing repo
+# RUN cd /root/diamond-node && . "$HOME/.cargo/env" &&  rustup default 1.64 && RUSTFLAGS='-C target-cpu=native' && cargo build --profile perf && cd ..
 
 # honey badger testing
 RUN cd /root && git clone https://github.com/$TESTING_REPO/honey-badger-testing.git && cd honey-badger-testing && git checkout $TESTING_COMMIT_HASH
@@ -38,7 +39,6 @@ RUN cd /root/hbbft-posdao-contracts && mkdir -p build/contracts && find artifact
 RUN rm /root/hbbft-posdao-contracts/build/contracts/*.dbg.json
 RUN cd /root/honey-badger-testing && . "$HOME/.cargo/env" && npm ci
 RUN cd /root/honey-badger-testing && . "$HOME/.cargo/env" && npm run build-open-ethereum
-RUN cd /root/honey-badger-testing && npm run 
 RUN cd /root/honey-badger-testing && . "$HOME/.cargo/env" && npm run testnet-fresh
 # honey badger testing
 
