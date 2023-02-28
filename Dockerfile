@@ -3,12 +3,6 @@ FROM node:16.19.1-buster
 # FROM node:16.19.1-slim
 # FROM ubuntu:20.04
 
-ARG CONTRACTS_REPO=surfingnerd
-ARG CONTRACTS_COMMIT_HASH=7d53424907c116ba59a47c3270a431e0b53386d2
-ARG NODE_REPO=surfingnerd
-ARG NODE_COMMIT_HASH=d83dbbe3a310a54046269aa95963f0c7adf7ddd9
-ARG TESTING_REPO=surfingnerd
-ARG TESTING_COMMIT_HASH=31aa74bc182a07df1a4a4ee3972325aa2f85f7ff
 
 ARG DEBIAN_FRONTEND=noninteractive
 
@@ -24,14 +18,23 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 # RUN export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")" [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" 
 # RUN nvm install 16.19.1 && nvm alias default 16.19.1
 
+ARG CONTRACTS_REPO=surfingnerd
+ARG CONTRACTS_COMMIT_HASH=7d53424907c116ba59a47c3270a431e0b53386d2
+
 # contracts
 RUN cd /root && git clone https://github.com/$CONTRACTS_REPO/hbbft-posdao-contracts.git && cd hbbft-posdao-contracts && git checkout $CONTRACTS_COMMIT_HASH
 RUN cd /root/hbbft-posdao-contracts && npm ci && npm run compile && mkdir -p build/contracts && find artifacts/**/*.sol/*json -type f -exec cp '{}' build/contracts ';' && cd ..
+
+ARG NODE_REPO=surfingnerd
+ARG NODE_COMMIT_HASH=77e4d224d7b1efafb4fedcb6607c88d2b2418689
 
 # diamond node
 RUN cd /root && git clone https://github.com/$NODE_REPO/diamond-node.git && cd diamond-node && git checkout $NODE_COMMIT_HASH
 # we don't need to build the node, becaus it is build by the testing repo
 # RUN cd /root/diamond-node && . "$HOME/.cargo/env" &&  rustup default 1.64 && RUSTFLAGS='-C target-cpu=native' && cargo build --profile perf && cd ..
+
+ARG TESTING_REPO=surfingnerd
+ARG TESTING_COMMIT_HASH=31aa74bc182a07df1a4a4ee3972325aa2f85f7ff
 
 # honey badger testing
 RUN cd /root && git clone https://github.com/$TESTING_REPO/honey-badger-testing.git && cd honey-badger-testing && git checkout $TESTING_COMMIT_HASH
