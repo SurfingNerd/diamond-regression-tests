@@ -26,7 +26,7 @@ RUN cd /root && git clone https://github.com/$CONTRACTS_REPO/hbbft-posdao-contra
 RUN cd /root/hbbft-posdao-contracts && npm ci && npm run compile && mkdir -p build/contracts && find artifacts/**/*.sol/*json -type f -exec cp '{}' build/contracts ';' && cd ..
 
 ARG NODE_REPO=surfingnerd
-ARG NODE_COMMIT_HASH=77e4d224d7b1efafb4fedcb6607c88d2b2418689
+ARG NODE_COMMIT_HASH=2321b14e24b0dcd4557f914e199365265c07c0a3
 
 # diamond node
 RUN cd /root && git clone https://github.com/$NODE_REPO/diamond-node.git && cd diamond-node && git checkout $NODE_COMMIT_HASH
@@ -34,7 +34,7 @@ RUN cd /root && git clone https://github.com/$NODE_REPO/diamond-node.git && cd d
 # RUN cd /root/diamond-node && . "$HOME/.cargo/env" &&  rustup default 1.64 && RUSTFLAGS='-C target-cpu=native' && cargo build --profile perf && cd ..
 
 ARG TESTING_REPO=surfingnerd
-ARG TESTING_COMMIT_HASH=31aa74bc182a07df1a4a4ee3972325aa2f85f7ff
+ARG TESTING_COMMIT_HASH=af2e07cfb2655f988176f894f330fcf52e9de1e9
 
 # honey badger testing
 RUN cd /root && git clone https://github.com/$TESTING_REPO/honey-badger-testing.git && cd honey-badger-testing && git checkout $TESTING_COMMIT_HASH
@@ -44,7 +44,7 @@ RUN rm /root/hbbft-posdao-contracts/build/contracts/*.dbg.json
 WORKDIR /root/honey-badger-testing
 RUN . "$HOME/.cargo/env" && npm ci
 RUN . "$HOME/.cargo/env" && npm run build-open-ethereum
-RUN . "$HOME/.cargo/env" && npm run testnet-fresh
+RUN . "$HOME/.cargo/env" && npm run testnet-fresh-regression
 # honey badger testing
 
 WORKDIR /root/honey-badger-testing
