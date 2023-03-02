@@ -34,7 +34,7 @@ RUN cd /root && git clone https://github.com/$NODE_REPO/diamond-node.git && cd d
 # RUN cd /root/diamond-node && . "$HOME/.cargo/env" &&  rustup default 1.64 && RUSTFLAGS='-C target-cpu=native' && cargo build --profile perf && cd ..
 
 ARG TESTING_REPO=surfingnerd
-ARG TESTING_COMMIT_HASH=af2e07cfb2655f988176f894f330fcf52e9de1e9
+ARG TESTING_COMMIT_HASH=24ae3f575aa8bc7f584df112fa3654e5d7d229fc
 
 # honey badger testing
 RUN cd /root && git clone https://github.com/$TESTING_REPO/honey-badger-testing.git && cd honey-badger-testing && git checkout $TESTING_COMMIT_HASH
