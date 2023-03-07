@@ -33,6 +33,8 @@ RUN cd /root && git clone https://github.com/$NODE_REPO/diamond-node.git && cd d
 # we don't need to build the node, becaus it is build by the testing repo
 # RUN cd /root/diamond-node && . "$HOME/.cargo/env" &&  rustup default 1.64 && RUSTFLAGS='-C target-cpu=native' && cargo build --profile perf && cd ..
 
+RUN mv /root/diamond-node /root/openethereum
+
 ARG TESTING_REPO=surfingnerd
 ARG TESTING_COMMIT_HASH=a9fe7d44dd478072ce0391ca1bae2f9a50875446
 
