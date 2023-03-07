@@ -26,7 +26,7 @@ RUN cd /root && git clone https://github.com/$CONTRACTS_REPO/hbbft-posdao-contra
 RUN cd /root/hbbft-posdao-contracts && npm ci && npm run compile && mkdir -p build/contracts && find artifacts/**/*.sol/*json -type f -exec cp '{}' build/contracts ';' && cd ..
 
 ARG NODE_REPO=surfingnerd
-ARG NODE_COMMIT_HASH=2321b14e24b0dcd4557f914e199365265c07c0a3
+ARG NODE_COMMIT_HASH=098a37d5f5c275548dd4ea3113bb790133e226e7
 
 # diamond node
 RUN cd /root && git clone https://github.com/$NODE_REPO/diamond-node.git && cd diamond-node && git checkout $NODE_COMMIT_HASH
