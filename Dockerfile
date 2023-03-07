@@ -19,24 +19,22 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 # RUN nvm install 16.19.1 && nvm alias default 16.19.1
 
 ARG CONTRACTS_REPO=surfingnerd
-ARG CONTRACTS_COMMIT_HASH=b898bb1c85fdb0de571aa00869fd6bc61c68edc5
+ARG CONTRACTS_COMMIT_HASH=7d53424907c116ba59a47c3270a431e0b53386d2
 
 # contracts
 RUN cd /root && git clone https://github.com/$CONTRACTS_REPO/hbbft-posdao-contracts.git && cd hbbft-posdao-contracts && git checkout $CONTRACTS_COMMIT_HASH
 RUN cd /root/hbbft-posdao-contracts && npm ci && npm run compile && mkdir -p build/contracts && find artifacts/**/*.sol/*json -type f -exec cp '{}' build/contracts ';' && cd ..
 
 ARG NODE_REPO=surfingnerd
-ARG NODE_COMMIT_HASH=6a38f8dfdfdb57deb97af5aecf70a898a4197996
+ARG NODE_COMMIT_HASH=de1dda8b6f9bba7b572d2acbd180a27013b1931b
 
 # diamond node
 RUN cd /root && git clone https://github.com/$NODE_REPO/diamond-node.git && cd diamond-node && git checkout $NODE_COMMIT_HASH
 # we don't need to build the node, becaus it is build by the testing repo
 # RUN cd /root/diamond-node && . "$HOME/.cargo/env" &&  rustup default 1.64 && RUSTFLAGS='-C target-cpu=native' && cargo build --profile perf && cd ..
 
-RUN mv /root/diamond-node /root/openethereum
-
 ARG TESTING_REPO=surfingnerd
-ARG TESTING_COMMIT_HASH=a9fe7d44dd478072ce0391ca1bae2f9a50875446
+ARG TESTING_COMMIT_HASH=24ae3f575aa8bc7f584df112fa3654e5d7d229fc
 
 # honey badger testing
 RUN cd /root && git clone https://github.com/$TESTING_REPO/honey-badger-testing.git && cd honey-badger-testing && git checkout $TESTING_COMMIT_HASH
