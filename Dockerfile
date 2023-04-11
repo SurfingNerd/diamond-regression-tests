@@ -26,7 +26,7 @@ RUN cd /root && git clone https://github.com/$CONTRACTS_REPO/hbbft-posdao-contra
 RUN cd /root/hbbft-posdao-contracts && npm ci && npm run compile && mkdir -p build/contracts && find artifacts/**/*.sol/*json -type f -exec cp '{}' build/contracts ';' && cd ..
 
 ARG NODE_REPO=surfingnerd
-ARG NODE_COMMIT_HASH=de1dda8b6f9bba7b572d2acbd180a27013b1931b
+ARG NODE_COMMIT_HASH=69c576d113e6ad9dc95cc47da4c23420366bd5b7
 
 # diamond node
 RUN cd /root && git clone https://github.com/$NODE_REPO/diamond-node.git && cd diamond-node && git checkout $NODE_COMMIT_HASH
@@ -34,7 +34,7 @@ RUN cd /root && git clone https://github.com/$NODE_REPO/diamond-node.git && cd d
 # RUN cd /root/diamond-node && . "$HOME/.cargo/env" &&  rustup default 1.64 && RUSTFLAGS='-C target-cpu=native' && cargo build --profile perf && cd ..
 
 ARG TESTING_REPO=surfingnerd
-ARG TESTING_COMMIT_HASH=24ae3f575aa8bc7f584df112fa3654e5d7d229fc
+ARG TESTING_COMMIT_HASH=8847eae5705a6fb05fb86b937ae2efaaa5138bee
 
 # honey badger testing
 RUN cd /root && git clone https://github.com/$TESTING_REPO/honey-badger-testing.git && cd honey-badger-testing && git checkout $TESTING_COMMIT_HASH
